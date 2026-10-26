@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feirinha+ · Pitch Demoday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Identidade Feirinha+ v2 */
+:root{
+  --floresta:#142E21; --verde:#27573F; --lima:#8CC63F; --ambar:#F2A900; --ambar-tinta:#231A00;
+  --laranja:#F36A21; --creme:#F6F2E9; --papel:#F3EBD8; --sage:#E6EBDA; --branco:#FFFFFF;
+  --tinta:#1B2820; --tinta-suave:#4A5A50; --linha:#DCD5C3;
+  --serif:'Fraunces',Georgia,serif; --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0E1F16;overflow:hidden;font-family:var(--sans);color:var(--tinta)}
+.viewport{position:fixed;inset:0;overflow:hidden}
+.deck{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--creme);overflow:hidden;visibility:hidden}
+.slide.ativo{visibility:visible}
+.slide.escuro{background:var(--floresta);color:var(--creme)}
+.bi{width:1em;height:1em;fill:currentColor;flex:none;vertical-align:-.125em}
+
+/* tipografia */
+.kicker{font:700 22px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--laranja);display:flex;align-items:center;gap:14px}
+.kicker::before{content:"";width:44px;height:4px;border-radius:4px;background:currentColor}
+h1,h2{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color:var(--verde)}
+.escuro h1,.escuro h2{color:var(--creme)}
+h2{font-size:76px;line-height:1.04}
+.lead{font-size:30px;line-height:1.45;color:var(--tinta-suave)}
+.fonte{font-size:17px;color:var(--tinta-suave);opacity:.85}
+.pad{position:absolute;inset:96px 120px}
+
+/* toldo decorativo */
+.toldo{position:absolute;left:0;right:0;top:0;height:34px;display:flex}
+.toldo i{flex:1;border-radius:0 0 999px 999px}
+.toldo i:nth-child(odd){background:var(--laranja)}
+.toldo i:nth-child(even){background:var(--papel)}
+
+/* 01 capa */
+#s1 .img{position:absolute;right:0;top:0;bottom:0;width:50%;background:url("../assets/nova_cena7.jpg") center/cover}
+#s1 .img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--creme) 0,rgba(246,242,233,0) 22%)}
+/* 00 abertura: só a startup */
+#s0{display:flex;flex-direction:column;align-items:center;justify-content:center}
+#s0 .startup{display:flex;align-items:flex-end;gap:26px;color:#1A5628}
+#s0 .logo-colh{width:880px;height:305px;display:block}
+#s0 .startup .ver{font:800 96px/1 var(--sans);letter-spacing:.02em;margin-bottom:72px}
+#s0 .apresenta{font:600 italic 64px/1 var(--serif);color:var(--tinta-suave);margin-top:64px;display:flex;align-items:center;gap:26px}
+#s0 .apresenta i{width:80px;height:5px;border-radius:5px;background:var(--laranja);display:block}
+#s0 .ifma{position:absolute;bottom:80px;font-size:24px;color:var(--tinta-suave)}
+#s0 .ifma b{color:var(--verde)}
+#s1 .esq{position:absolute;left:120px;top:150px;width:860px}
+#s1 .logo{width:640px;display:block}
+#s1 .frase{font:600 60px/1.12 var(--serif);color:var(--verde);margin-top:56px}
+#s1 .frase em{font-style:normal;color:var(--laranja)}
+#s1 .rodape{position:absolute;left:120px;bottom:90px;display:flex;gap:18px;align-items:center;font-size:24px;font-weight:600;color:var(--tinta)}
+#s1 .rodape b{color:var(--verde);font-weight:800}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border-radius:999px;background:var(--branco);border:1.5px solid var(--linha);font-weight:600;font-size:20px;color:var(--verde)}
+
+/* 02 problema */
+#s2 .img{position:absolute;left:0;top:0;bottom:0;width:40%;background:url("../assets/cena1.jpg") 78% center/cover}
+#s2 .dir{position:absolute;left:calc(40% + 90px);right:110px;top:96px;bottom:96px;display:flex;flex-direction:column}
+#s2 h2{margin:22px 0 40px}
+.dores{display:flex;flex-direction:column;gap:22px}
+.dor{display:grid;grid-template-columns:84px 1fr auto;gap:28px;align-items:center;background:var(--branco);border-radius:20px;padding:28px 34px;box-shadow:0 2px 0 var(--linha)}
+.dor .ic{width:84px;height:84px;border-radius:22px;display:grid;place-items:center;font-size:40px;background:var(--sage);color:var(--verde)}
+.dor h3{font:700 30px/1.2 var(--sans);color:var(--tinta)}
+.dor p{font-size:21px;line-height:1.4;color:var(--tinta-suave);margin-top:6px}
+.dor .num{font:700 64px/1 var(--serif);color:var(--laranja);text-align:right;min-width:190px}
+.dor .num small{display:block;font:600 16px/1.2 var(--sans);color:var(--tinta-suave);margin-top:6px}
+.faixa{margin-top:auto;display:flex;align-items:center;gap:20px;background:var(--verde);color:var(--creme);border-radius:20px;padding:24px 32px;font-size:23px}
+.faixa b{font:700 40px/1 var(--serif);color:var(--lima);white-space:nowrap}
+.faixa .bi{font-size:32px;color:var(--lima)}
+
+/* 03 solucao: vídeo do passo a passo no fundo */
+#s3 .fundo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:var(--papel)}
+#s3 .vela{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(246,242,233,.96) 0,rgba(246,242,233,.85) 20%,rgba(246,242,233,0) 30%),
+  linear-gradient(0deg,rgba(246,242,233,.97) 0,rgba(246,242,233,.9) 13%,rgba(246,242,233,0) 21%)}
+#s3 .topo{position:absolute;left:120px;right:120px;top:56px}
+#s3 .linha{display:flex;align-items:center;gap:28px}
+.chips{display:flex;gap:14px}
+.chip{position:relative;font:700 24px/1 var(--sans);color:var(--tinta-suave);padding:12px 22px;border-radius:999px;border:2px dashed #B9B19E;background:rgba(246,242,233,.8)}
+.chip .risco{position:absolute;left:10px;right:10px;top:50%;height:4px;margin-top:-2px;background:var(--laranja);border-radius:4px;transform-origin:left center}
+#s3 h2{font-size:84px;margin-top:14px}
+#s3 h2 span{color:var(--laranja)}
+#s3 .apoio{font-size:26px;line-height:1.4;color:var(--tinta-suave);margin-top:8px}
+#s3 .apoio b{color:var(--verde)}
+.passos{position:absolute;left:40px;right:40px;bottom:30px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.passo{border-radius:18px;padding:16px 20px;display:grid;grid-template-columns:44px 1fr;column-gap:14px;align-items:start;border:1.5px solid transparent;transition:background .4s,border-color .4s,transform .4s,box-shadow .4s}
+.passo.on{background:var(--branco);border-color:var(--linha);transform:translateY(-6px);box-shadow:0 14px 30px -18px rgba(20,46,33,.5)}
+.passo .n{width:44px;height:44px;border-radius:50%;background:var(--verde);color:var(--creme);display:grid;place-items:center;font:800 20px var(--sans);grid-row:span 2;transition:background .4s,color .4s}
+.passo.on .n{background:var(--ambar);color:var(--ambar-tinta)}
+.passo h3{font:700 23px/1.2 var(--sans);color:var(--verde)}
+.passo p{font-size:17px;line-height:1.4;color:var(--tinta-suave);margin-top:4px}
+
+/* 04 demo */
+#s4 .tel{position:absolute;left:230px;top:70px;width:530px;height:942px;border-radius:36px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.7)}
+/* o vídeo foi gravado com um toldo no topo: sobe 16px para escondê-lo dentro da moldura */
+#s4 .tel video{width:100%;height:calc(100% + 16px);margin-top:-16px;object-fit:cover;display:block;background:var(--floresta)}
+#s4 .tel .sem-video{position:absolute;inset:0;border-radius:48px;display:none;place-items:center;text-align:center;padding:40px;font-size:22px;color:var(--creme);background:var(--verde)}
+#s4 .dir{position:absolute;left:900px;right:140px;top:200px}
+#s4 .kicker{color:var(--ambar)}
+#s4 h2{font-size:84px;margin:28px 0 46px}
+#s4 h2 span{color:var(--lima)}
+.lista-demo{display:flex;flex-direction:column;gap:22px}
+.lista-demo div{display:flex;gap:22px;align-items:center;font-size:29px;line-height:1.35;background:rgba(246,242,233,.07);border:1.5px solid rgba(246,242,233,.14);border-radius:20px;padding:24px 28px}
+.lista-demo .bi{font-size:40px;color:var(--ambar)}
+.apps-titulo{font:700 22px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--creme);opacity:.75;margin-bottom:18px}
+.lista-demo .txt{flex:1;display:flex;flex-direction:column;gap:2px}
+.lista-demo .txt b{font:700 30px/1.2 var(--sans);color:var(--creme)}
+.lista-demo .txt span{font-size:22px;line-height:1.35;opacity:.8}
+.lista-demo .tag{font:800 15px var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-radius:999px;white-space:nowrap;background:rgba(140,198,63,.16);color:var(--lima)}
+.lista-demo .tag.video{background:var(--ambar);color:var(--ambar-tinta)}
+.lista-demo .tag.proto{background:rgba(246,242,233,.12);color:var(--creme)}
+.lista-demo .no-video{border-color:var(--ambar);background:rgba(242,169,0,.1)}
+.qr-nota{display:flex;gap:14px;align-items:center;margin-top:30px;font-size:22px;color:var(--creme);opacity:.85}
+.qr-nota .bi{font-size:28px;color:var(--ambar)}
+.ao-vivo{display:inline-flex;align-items:center;gap:12px;margin-top:40px;font:700 20px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--lima)}
+.ao-vivo i{width:14px;height:14px;border-radius:50%;background:var(--lima)}
+
+/* 05 mercado */
+#s5 h2{margin:22px 0 46px}
+.mercados{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.merc{background:var(--branco);border-radius:24px;padding:34px 36px 30px;box-shadow:0 2px 0 var(--linha);display:flex;flex-direction:column}
+.merc header{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+.merc header .ic{width:64px;height:64px;border-radius:18px;background:var(--sage);color:var(--verde);display:grid;place-items:center;font-size:32px}
+.merc header h3{font:700 32px var(--sans);color:var(--verde)}
+.funil{display:flex;flex-direction:column;gap:12px;flex:1}
+.f{border-radius:14px;padding:16px 20px;background:var(--creme);transform-origin:left center}
+.f b{display:block;font:700 40px/1.05 var(--serif);color:var(--tinta)}
+.f b span{font:inherit;color:inherit}
+.f span{font-size:18px;line-height:1.35;color:var(--tinta-suave)}
+.f.meta{background:var(--verde);margin-top:auto}
+.f.meta b{color:var(--lima)}
+.f.meta span{color:var(--creme)}
+#s5 .fonte{position:absolute;left:120px;bottom:44px}
+
+/* 06 modelo */
+#s6 h2{margin:22px 0 0;max-width:1100px}
+.selo{position:absolute;right:140px;top:64px;width:250px;height:250px;border-radius:50%;background:var(--ambar);color:var(--ambar-tinta);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;box-shadow:0 0 0 12px rgba(242,169,0,.18)}
+.selo .bi{font-size:52px}
+.selo b{font:700 30px/1.1 var(--serif);padding:0 26px}
+.escada{position:absolute;left:120px;right:120px;bottom:150px;height:560px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:end}
+.degrau{border-radius:24px 24px 0 0;padding:34px 34px;color:var(--creme);display:flex;flex-direction:column;transform-origin:bottom center}
+.degrau:nth-child(1){height:58%;background:#3B6E52}
+.degrau:nth-child(2){height:79%;background:var(--verde)}
+.degrau:nth-child(3){height:100%;background:var(--floresta)}
+.degrau .quando{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;font:800 17px var(--sans);letter-spacing:.12em;text-transform:uppercase;background:rgba(246,242,233,.14);padding:8px 16px;border-radius:999px;color:var(--lima)}
+.degrau h3{font:600 36px/1.15 var(--serif);margin:20px 0 12px}
+.degrau p{font-size:20px;line-height:1.45;opacity:.9}
+.degrau .valor{margin-top:auto;font:700 46px/1 var(--serif);color:var(--ambar)}
+.degrau .valor small{display:block;margin-top:8px;font:600 19px var(--sans);color:var(--creme);opacity:.85}
+.chao{position:absolute;left:120px;right:120px;bottom:146px;height:6px;border-radius:6px;background:var(--floresta)}
+#s6 .nota{position:absolute;left:120px;bottom:72px;font-size:21px;color:var(--tinta-suave);display:flex;gap:12px;align-items:center}
+#s6 .nota .bi{color:var(--verde);font-size:26px}
+
+/* 07 concorrencia */
+#s7 h2{margin:22px 0 40px}
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:var(--branco);border-radius:24px;overflow:hidden;box-shadow:0 2px 0 var(--linha);font-size:22px}
+.comp th,.comp td{padding:20px 22px;text-align:center;border-bottom:1.5px solid #EEE8DA}
+.comp tr:last-child td{border-bottom:0}
+.comp thead th{font:700 20px/1.25 var(--sans);color:var(--tinta-suave);background:#FBF8F1}
+.comp th:first-child,.comp td:first-child{text-align:left;font-weight:600;color:var(--tinta);width:30%}
+.comp .nos{background:var(--verde);color:var(--creme)}
+.comp thead .nos{background:var(--floresta);color:var(--lima);font:700 26px var(--serif)}
+.comp .bi{font-size:32px}
+.sim{color:var(--verde)} .nao{color:#B4ACA0} .parc{font-size:18px;font-weight:700;color:#9A7A1E}
+.comp .nos .bi{color:var(--lima)}
+#s7 .rodape{margin-top:30px;font-size:24px;color:var(--tinta-suave);display:flex;gap:14px;align-items:center}
+#s7 .rodape .bi{color:var(--laranja);font-size:30px}
+
+/* 08 tracao */
+#s8 .img{position:absolute;right:0;top:0;bottom:0;width:36%;background:url("../assets/nova_cena6.jpg") 62% center/cover}
+#s8 .esq{position:absolute;left:120px;top:96px;width:calc(64% - 200px)}
+#s8 h2{margin:22px 0 14px}
+#s8 .lead{margin-bottom:40px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--branco);border-radius:20px;padding:30px 32px;box-shadow:0 2px 0 var(--linha)}
+.card .ic{width:60px;height:60px;border-radius:16px;background:var(--sage);color:var(--verde);display:grid;place-items:center;font-size:30px;margin-bottom:18px}
+.card b{display:block;font:700 34px/1.15 var(--serif);color:var(--verde);margin-bottom:8px}
+.card p{font-size:20px;line-height:1.45;color:var(--tinta-suave)}
+
+/* 09 equipe */
+#s9 h2{margin:22px 0 46px}
+.equipe{display:grid;grid-template-columns:repeat(4,1fr);gap:44px}
+/* cada pessoa é uma banquinha: toldo em cima, foto dentro da banca, texto no balcão */
+.pessoa{position:relative;text-align:center;display:flex;flex-direction:column}
+.pessoa .toldo-b{position:relative;z-index:2;display:flex;height:74px;margin:0 -14px;filter:drop-shadow(0 6px 4px rgba(20,46,33,.18))}
+.pessoa .toldo-b::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;border-radius:8px 8px 0 0;background:#C9531A}
+.pessoa .toldo-b i{flex:1;border-radius:0 0 999px 999px}
+.pessoa .toldo-b i:nth-child(odd){background:var(--laranja)}
+.pessoa .toldo-b i:nth-child(even){background:var(--papel)}
+.pessoa .dentro{position:relative;margin-top:-30px;padding:46px 30px 0;height:300px;background:linear-gradient(180deg,#E4D9BF,#EFE7D3);
+  border-left:12px solid var(--verde);border-right:12px solid var(--verde)}
+.av{position:relative;width:206px;height:226px;margin:0 auto;border-radius:18px;background:var(--verde) center top/cover no-repeat;box-shadow:0 10px 24px -12px rgba(20,46,33,.6)}
+.av .bi{position:absolute;right:-16px;bottom:-14px;width:58px;height:58px;padding:13px;border-radius:50%;background:var(--ambar);color:var(--ambar-tinta);box-shadow:0 0 0 5px #EFE7D3}
+.pessoa .balcao{position:relative;z-index:1;flex:1;margin:0 -14px;padding:24px 24px 26px;background:var(--verde);border-top:14px solid var(--floresta);border-radius:6px 6px 16px 16px;box-shadow:0 14px 26px -16px rgba(20,46,33,.7)}
+.pessoa h3{font:600 40px var(--serif);color:var(--creme)}
+.pessoa .papel{font:700 18px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ambar);margin:8px 0 10px}
+.pessoa p{font-size:20px;line-height:1.4;color:var(--creme);opacity:.88}
+#s9 .apoio{margin-top:46px;font-size:24px;color:var(--tinta-suave);display:flex;gap:14px;align-items:center;justify-content:center}
+#s9 .apoio b{color:var(--verde)}
+
+/* 10 mapa */
+#s10 .esq{position:absolute;left:120px;top:96px;width:720px}
+#s10 h2{margin:22px 0 40px}
+.etapas{position:relative;display:flex;flex-direction:column;gap:14px}
+.etapa{display:grid;grid-template-columns:56px 1fr;gap:22px;align-items:start;padding:20px 24px;border-radius:20px;border:1.5px solid transparent;opacity:.4;transition:opacity .4s,background .4s,border-color .4s}
+.etapa.on{opacity:1;background:var(--branco);border-color:var(--linha)}
+.etapa.feita{opacity:.75}
+.etapa .marco{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--sage);color:var(--verde);font-size:26px}
+.etapa.on .marco{background:var(--laranja);color:var(--branco)}
+.etapa .quando{font:800 18px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--laranja)}
+.etapa h3{font:700 26px/1.25 var(--sans);color:var(--verde);margin-top:4px}
+.etapa p{font-size:19px;line-height:1.4;color:var(--tinta-suave);margin-top:4px}
+.mapa{position:absolute;left:960px;top:70px;width:845px;height:922px}
+.mapa > img{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* barraquinhas no mapa: ancoradas pela base (x, y em % da imagem) */
+.banquinha{position:absolute;width:46px;height:44px;margin:-44px 0 0 -23px;opacity:0;filter:drop-shadow(0 4px 3px rgba(0,0,0,.35))}
+.banquinha.grande{width:64px;height:60px;margin:-60px 0 0 -32px}
+.banquinha .teto{position:absolute;left:-3px;right:-3px;top:0;height:42%;border-radius:4px 4px 0 0;transform-origin:center bottom;
+  background:repeating-linear-gradient(90deg,var(--laranja) 0 16.66%,var(--creme) 16.66% 33.33%);clip-path:polygon(10% 0,90% 0,100% 100%,0 100%)}
+.banquinha .poste{position:absolute;bottom:30%;width:12%;height:30%;background:var(--creme);transform-origin:center bottom}
+.banquinha .poste.e{left:6%} .banquinha .poste.d{right:6%}
+.banquinha .tampo{position:absolute;left:0;right:0;bottom:0;height:30%;border-radius:3px;background:var(--ambar);transform-origin:center bottom}
+
+/* 11 fechamento */
+#s11 .img{position:absolute;left:0;top:0;bottom:0;width:42%;background:url("../assets/cena3.jpg") 50% center/cover}
+#s11 .dir{position:absolute;left:calc(42% + 100px);right:120px;top:120px;bottom:100px;display:flex;flex-direction:column}
+#s11 .logo{width:420px}
+#s11 .fecho{font:600 70px/1.1 var(--serif);color:var(--creme);margin-top:50px}
+#s11 .fecho em{font-style:normal;color:var(--lima)}
+#s11 .base{margin-top:auto;display:flex;align-items:flex-end;gap:42px}
+#s11 .qr{background:var(--branco);border-radius:20px;padding:16px;width:220px;height:220px}
+#s11 .qr img{width:100%;height:100%;display:block}
+#s11 .contato{display:flex;flex-direction:column;gap:14px;font-size:24px;color:var(--creme)}
+#s11 .contato div{display:flex;gap:14px;align-items:center}
+#s11 .contato .bi{color:var(--ambar);font-size:28px}
+#s11 .assina{margin-top:6px;white-space:nowrap}
+#s11 .assina .logo-colh{width:230px;height:80px;color:var(--creme)}
+#s11 .assina b{font:800 28px var(--sans);margin-left:-6px;align-self:flex-end;margin-bottom:14px}
+#s11 .obrigado{font:600 54px var(--serif);color:var(--ambar)}
+#s11 .logo-box{align-self:center}
+
+/* chrome */
+.barra{position:fixed;left:0;bottom:0;height:5px;background:var(--laranja);width:0;z-index:20}
+.ctrl{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;align-items:center;z-index:20;opacity:.25;transition:opacity .3s}
+.ctrl:hover{opacity:1}
+/* tecla H: esconde controles e cursor (para compartilhar a tela) */
+body.sem-ctrl .ctrl{display:none}
+body.sem-ctrl{cursor:none}
+.ctrl button{width:44px;height:44px;border-radius:12px;border:0;background:rgba(246,242,233,.92);color:var(--floresta);font-size:20px;display:grid;place-items:center;cursor:pointer}
+.ctrl span{font:700 15px var(--sans);color:var(--creme);background:rgba(20,46,33,.85);padding:12px 14px;border-radius:12px;min-width:74px;text-align:center}
+.notas{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);width:min(1100px,92vw);background:rgba(14,31,22,.95);color:var(--creme);border-radius:18px;padding:22px 28px;font-size:19px;line-height:1.5;z-index:30;display:none;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.notas.on{display:block}
+.notas b{display:block;color:var(--ambar);font-size:14px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+</style>
+</head>
+<body>
+<!-- Ícones: Bootstrap Icons 1.11.3 (MIT), SVG embutido -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- bi-arrow-left -->
+  <symbol id="bi-arrow-left" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/></symbol>
+  <!-- bi-arrow-repeat -->
+  <symbol id="bi-arrow-repeat" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+  <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/></symbol>
+  <!-- bi-arrow-right -->
+  <symbol id="bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></symbol>
+  <!-- bi-arrows-fullscreen -->
+  <symbol id="bi-arrows-fullscreen" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707m0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707"/></symbol>
+  <!-- bi-bank2 -->
+  <symbol id="bi-bank2" viewBox="0 0 16 16"><path d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916zM12.375 6v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1z"/></symbol>
+  <!-- bi-basket2-fill -->
+  <symbol id="bi-basket2-fill" viewBox="0 0 16 16"><path d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1"/></symbol>
+  <!-- bi-buildings-fill -->
+  <symbol id="bi-buildings-fill" viewBox="0 0 16 16"><path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zM2 11h1v1H2zm2 0h1v1H4zm-1 2v1H2v-1zm1 0h1v1H4zm9-10v1h-1V3zM8 5h1v1H8zm1 2v1H8V7zM8 9h1v1H8zm2 0h1v1h-1zm-1 2v1H8v-1zm1 0h1v1h-1zm3-2v1h-1V9zm-1 2h1v1h-1zm-2-4h1v1h-1zm3 0v1h-1V7zm-2-2v1h-1V5zm1 0h1v1h-1z"/></symbol>
+  <!-- bi-calendar3 -->
+  <symbol id="bi-calendar3" viewBox="0 0 16 16"><path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+  <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></symbol>
+  <!-- bi-cash-coin -->
+  <symbol id="bi-cash-coin" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
+  <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
+  <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
+  <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/></symbol>
+  <!-- bi-check-lg -->
+  <symbol id="bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/></symbol>
+  <!-- bi-clipboard2-check-fill -->
+  <symbol id="bi-clipboard2-check-fill" viewBox="0 0 16 16"><path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"/>
+  <path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5m6.769 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708.708"/></symbol>
+  <!-- bi-chat-fill -->
+  <symbol id="bi-chat-fill" viewBox="0 0 16 16"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/></symbol>
+  <!-- bi-palette-fill -->
+  <symbol id="bi-palette-fill" viewBox="0 0 16 16"><path d="M12.433 10.07C14.133 10.585 16 11.15 16 8a8 8 0 1 0-8 8c1.996 0 1.826-1.504 1.649-3.08-.124-1.101-.252-2.237.351-2.92.465-.527 1.42-.237 2.433.07M8 5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m4.5 3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3M5 6.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m.5 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/></symbol>
+  <!-- bi-cpu-fill -->
+  <symbol id="bi-cpu-fill" viewBox="0 0 16 16"><path d="M6.5 6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+  <path d="M5.5.5a.5.5 0 0 0-1 0V2A2.5 2.5 0 0 0 2 4.5H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2v1H.5a.5.5 0 0 0 0 1H2A2.5 2.5 0 0 0 4.5 14v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14h1v1.5a.5.5 0 0 0 1 0V14a2.5 2.5 0 0 0 2.5-2.5h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14v-1h1.5a.5.5 0 0 0 0-1H14A2.5 2.5 0 0 0 11.5 2V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1V.5a.5.5 0 0 0-1 0V2h-1zm1 4.5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3A1.5 1.5 0 0 1 6.5 5"/></symbol>
+  <!-- bi-dash-lg -->
+  <symbol id="bi-dash-lg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/></symbol>
+  <!-- bi-database-fill -->
+  <symbol id="bi-database-fill" viewBox="0 0 16 16"><path d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223"/>
+  <path d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/>
+  <path d="M2 9.161V10c0 1.007.875 1.755 1.904 2.223C4.978 12.711 6.427 13 8 13s3.022-.289 4.096-.777C13.125 11.755 14 11.007 14 10v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/>
+  <path d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"/></symbol>
+  <!-- bi-flag-fill -->
+  <symbol id="bi-flag-fill" viewBox="0 0 16 16"><path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001"/></symbol>
+  <!-- bi-geo-alt-fill -->
+  <symbol id="bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/></symbol>
+  <!-- bi-graph-up-arrow -->
+  <symbol id="bi-graph-up-arrow" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/></symbol>
+  <!-- bi-hand-thumbs-up-fill -->
+  <symbol id="bi-hand-thumbs-up-fill" viewBox="0 0 16 16"><path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/></symbol>
+  <!-- bi-laptop -->
+  <symbol id="bi-laptop" viewBox="0 0 16 16"><path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"/></symbol>
+  <!-- bi-mortarboard-fill -->
+  <symbol id="bi-mortarboard-fill" viewBox="0 0 16 16"><path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
+  <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/></symbol>
+  <!-- bi-people-fill -->
+  <symbol id="bi-people-fill" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/></symbol>
+  <!-- bi-qr-code -->
+  <symbol id="bi-qr-code" viewBox="0 0 16 16"><path d="M2 2h2v2H2z"/>
+  <path d="M6 0v6H0V0zM5 1H1v4h4zM4 12H2v2h2z"/>
+  <path d="M6 10v6H0v-6zm-5 1v4h4v-4zm11-9h2v2h-2z"/>
+  <path d="M10 0v6h6V0zm5 1v4h-4V1zM8 1V0h1v2H8v2H7V1zm0 5V4h1v2zM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8zm0 0v1H2V8H1v1H0V7h3v1zm10 1h-1V7h1zm-1 0h-1v2h2v-1h-1zm-4 0h2v1h-1v1h-1zm2 3v-1h-1v1h-1v1H9v1h3v-2zm0 0h3v1h-2v1h-1zm-4-1v1h1v-2H7v1z"/>
+  <path d="M7 12h1v3h4v1H7zm9 2v2h-3v-1h2v-1z"/></symbol>
+  <!-- bi-shield-fill-check -->
+  <symbol id="bi-shield-fill-check" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.8 11.8 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7 7 0 0 0 1.048-.625 11.8 11.8 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.54 1.54 0 0 0-1.044-1.263 63 63 0 0 0-2.887-.87C9.843.266 8.69 0 8 0m2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793z"/></symbol>
+  <!-- bi-shop -->
+  <symbol id="bi-shop" viewBox="0 0 16 16"><path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/></symbol>
+  <!-- bi-signpost-split-fill -->
+  <symbol id="bi-signpost-split-fill" viewBox="0 0 16 16"><path d="M7 16h2V6h5a1 1 0 0 0 .8-.4l.975-1.3a.5.5 0 0 0 0-.6L14.8 2.4A1 1 0 0 0 14 2H9v-.586a1 1 0 0 0-2 0V7H2a1 1 0 0 0-.8.4L.225 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4h5z"/></symbol>
+  <!-- bi-trash3 -->
+  <symbol id="bi-trash3" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/></symbol>
+  <!-- bi-tree-fill -->
+  <symbol id="bi-tree-fill" viewBox="0 0 16 16"><path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777z"/></symbol>
+  <!-- bi-whatsapp -->
+  <symbol id="bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></symbol>
+  <!-- bi-window -->
+  <symbol id="bi-window" viewBox="0 0 16 16"><path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+  <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm13 2v2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1M2 14a1 1 0 0 1-1-1V6h14v7a1 1 0 0 1-1 1z"/></symbol>
+  <!-- bi-window-sidebar -->
+  <symbol id="bi-window-sidebar" viewBox="0 0 16 16"><path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+  <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1zM1 13V6h4v8H2a1 1 0 0 1-1-1m5 1V6h9v7a1 1 0 0 1-1 1z"/></symbol>
+  <!-- bi-x-lg -->
+  <symbol id="bi-x-lg" viewBox="0 0 16 16"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></symbol>
+  <!-- logo Colheitas (design/Logo Colheitas/Logo padrao verde escura.svg), recortada -->
+  <symbol id="logo-colheitas" viewBox="6 121 462 160"><g id="Padrao.PNG"><path d="M307.563,144.48c0.257,0.01 0.022,0.304 0.283,0.314c0.03,0.001 0.116,0.004 0.226,-0.294c0.584,-1.574 -0.146,-1.807 3.112,-9.592c5.056,-12.08 19.104,-15.173 23.428,-8.515c3.929,6.051 3.904,11.422 3.899,12.467c-0.011,2.334 3.114,-0.301 4.751,-0.359c10.152,-0.359 9.487,10.47 12.478,8.753c8.967,-5.144 14.671,12.114 8.578,12.45c-9.394,0.518 -9.477,-0.008 -10.186,0.395c-0.767,0.436 1.319,18.149 -7.398,23.405c-6.002,3.618 -6.038,3.547 -6.558,3.864c-2.054,1.252 -1.545,19.486 -1.063,21.882c3.254,16.191 2.948,31.401 7.588,38.168c3.565,5.198 3.511,6.75 5.516,6.781c5.975,0.091 6.209,0.512 7.785,-0.871c4.75,-4.169 10.151,4.153 4.784,6.581c-3.283,1.485 -5.686,-1.438 -5.796,-1.482c-0.862,-0.344 -53.572,-0.303 -53.745,-0.198c-0.816,0.494 -0.714,11.003 -0.705,11.962c0.016,1.629 1.253,1.073 1.599,2.664c1.014,4.65 -6.545,4.864 -5.36,0.489c0.602,-2.222 0.658,-2.19 0.644,-4.505c-0.015,-2.476 0.829,-3.649 -1.646,-3.638c-2.897,0.013 -0.926,4.977 -0.765,5.381c1.671,4.208 -6.242,4.076 -4.25,-0.882c1.248,-3.106 -0.453,-7.812 5.016,-7.57c2.361,0.105 2.076,-0.801 2.102,-3.145c0.012,-1.127 -0.646,-0.95 -13.755,-1.022c-47.761,-0.263 -47.765,-0.139 -47.781,-0.126c-0.509,0.43 -0.187,6.436 -0.165,6.516c0.191,0.688 2.868,0.451 3.119,0.429c0.585,-0.052 1.317,-0.686 1.808,-0.837c4.207,-1.294 3.276,6.354 -0.492,4.51c-1.627,-0.796 -1.664,-0.643 -3.55,-0.483c-1.962,0.167 -0.686,5.52 -0.259,6.102c2.644,3.607 -0.934,5.082 -2.469,4.841c-4.191,-0.658 -1.061,-5.068 -1.217,-6.945c-0.293,-3.511 0.73,-13.972 -0.54,-14.339c-2.605,-0.753 -3.259,-0.455 -3.609,2.24c-0.48,3.689 -3.368,4.073 -4.015,4.48c-5.757,3.624 -6.041,-4.52 -2.243,-4.358c1.302,0.056 3.232,2.324 3.348,-1.468c0.02,-0.663 -0.153,-1.244 -6.5,-1.058c-1.671,0.049 -0.948,8.355 -0.393,9.104c4.328,5.836 -3.134,8.516 -4.989,4.521c-1.37,-2.95 0.749,-4.471 0.973,-4.908c0.425,-0.828 0.208,-8.382 0.187,-8.421c-0.499,-0.931 -18.439,0.107 -19.898,-0.699c-11.874,-6.56 -6.192,-12.986 -6.395,-22.738c-0.117,-5.64 -0.228,-5.591 -0.895,-11.2c-1.39,-11.692 -12.146,-7.906 -13.633,-5.689c-3.43,5.114 -0.532,6.042 -4.027,16.52c-0.632,1.894 -12.265,0.911 -13.188,0.741c-1.352,-0.25 -0.687,-4.498 -0.717,-5.755c-0.175,-7.469 0.012,-17.745 0.041,-19.288c0.01,-0.562 0.025,-1.343 6.92,-1.179c1.149,0.027 1.802,1.619 4.065,1.378c5.208,-0.554 2.627,-11.234 -3.676,-5.195c-0.386,0.37 -0.53,0.508 -6.684,0.229c-0.678,-0.031 -0.663,-0.948 -0.661,-1.047c0.043,-2.569 0.003,-19.305 0.46,-20.055c0.879,-1.44 16.167,-0.653 17.706,-0.521c3.243,0.279 -1.807,5.269 0.615,14.258c1.196,4.438 13.326,5.252 13.45,-2.19c0.155,-9.263 0.156,-11.213 4.792,-10.921c0.92,0.058 0.524,0.556 1.07,6.87c0.932,10.793 10.173,3.947 10.291,7.164c0.181,4.942 -0.243,4.884 -0.313,9.876c-0.016,1.109 -0.44,1.457 -7.926,1.233c-0.451,-0.013 -1.475,-0.368 -1.554,-1.194c-0.297,-3.101 0.598,-2.834 1.34,-3.774c3.046,-3.857 -2.861,-7.953 -5.418,-4.599c-2.267,2.974 0.264,5.06 0.595,5.333c2.218,1.828 -2.901,7.291 4.579,7.311c7.472,0.021 8.385,-0.623 8.39,1.076c0.072,27.02 -0.925,29.896 5.119,33.509c1.542,0.922 38.957,-0.451 51.933,-0.605c17.631,-0.209 48.144,-0.952 48.416,-1.054c0.552,-0.208 4.603,-8.87 6.214,-31.855c1.169,-16.673 0.252,-16.64 -0.614,-36.296c-0.113,-2.572 -1.195,-1.771 -2.938,-2.17c-15.032,-3.437 -11.111,-10.271 -12.037,-14.431c-0.292,-1.313 -11.405,-0.643 -12.114,-1.37c-0.421,-0.432 -0.204,-6.931 -0.149,-7.163c3.015,-12.549 11.709,-13.084 15.069,-7.794Zm33.66,28.899c0.882,-4.544 0.177,-4.755 2.328,-8.614c2.974,-5.339 4.291,-5.527 6.892,-4.909c0.328,0.078 1.5,0.356 0.948,4.106c-0.872,5.928 -1.624,16.16 -9.48,18.818c-2.9,0.981 -1.529,-1.353 -0.688,-9.4Zm-29.343,-12.802c1.85,0.028 3.476,-0.403 3.911,1.167c2.658,9.605 3.135,9.425 3.324,10.268c0.199,0.888 -1.686,0.733 -1.844,0.72c-7.391,-0.611 -9.541,-8.621 -9.828,-9.688c-0.872,-3.247 1.072,-2.5 4.438,-2.467Z" style="fill:currentColor;fill-opacity:1;"/><path d="M386.077,231.636c-0.126,-7.283 0.418,-16.273 -9.666,-13.492c-6.643,1.832 -2.823,15.368 -4.529,17.023c-0.731,0.709 -17.08,0.926 -17.767,0.381c-0.404,-0.32 -0.835,-0.365 -0.835,-27.219c0,-20.028 -2.219,-22.601 4.756,-24.709c0.572,-0.173 41.099,-0.057 41.257,-0.027c6.518,1.205 6.238,2.866 6.042,9.95c-0.456,16.436 -0.129,40.348 -0.548,41.722c-0.296,0.969 -0.733,0.749 -16.707,0.552c-2.796,-0.034 -1.987,-3.14 -2.001,-4.179Zm-8.756,-26.256c-0.17,-0.003 -5.396,1.659 -1.928,-7.865c1.602,-4.4 8.774,-2.033 9.144,-0.404c1.493,6.569 0.835,7.198 0.393,7.62c-0.926,0.885 -3.258,0.649 -7.609,0.649Z" style="fill:currentColor;fill-opacity:1;"/><path d="M435.59,184.813c1.09,-0.006 23.728,0.364 24.663,0.617c5.737,1.555 5.115,4.484 5.006,13.488c-0.032,2.675 -4.499,0.655 -7.246,1.086c-0.548,0.086 -9.994,0.481 -9.445,6.084c0.284,2.9 4.407,4.473 5.848,4.48c10.36,0.05 10.485,-0.092 11.101,0.549c0.931,0.968 0.057,18.871 -0.023,20.51c-0.201,4.113 1.132,5.976 -3.014,6.089c-0.489,0.013 -46.166,0.377 -47.551,-0.148c-0.669,-0.254 -3.301,-1.251 -2.43,-8.612c0.289,-2.444 7.33,0.292 13.278,-2.137c3.748,-1.531 4.164,-8.78 -4.973,-8.528c-5.901,0.162 -7.807,0.404 -7.854,-5.48c-0.182,-22.958 0.12,-23.357 1.326,-24.951c0.327,-0.432 2.231,-2.948 6.058,-3.037c7.808,-0.182 14.035,-0.039 15.255,-0.011Z" style="fill:currentColor;fill-opacity:1;"/><path d="M99.87,184.812c6.948,-0.211 9.867,-1 9.849,0.211c-0.009,0.621 0.398,34.146 0.25,47.506c-0.019,1.754 -1.032,1.557 -28.029,1.557c-11.239,0 -12.25,0.376 -12.266,-1.55c-0.032,-3.802 -0.385,-46.263 0.138,-47.529c0.275,-0.665 0.543,-0.61 20.196,-0.601c4.939,0.002 4.894,0.329 9.861,0.406Zm-16.376,22.172c0.674,-9.235 9.371,-7.142 10.058,-6.661c7.004,4.901 0.929,20.403 -5.369,18.419c-5.184,-1.633 -4.607,-4.368 -4.689,-11.758Z" style="fill:currentColor;fill-opacity:1;"/><path d="M47.876,183.019c13.26,0 14.471,-0.241 14.534,1.071c0.039,0.827 0.102,2.147 -0.401,10.339c-0.108,1.764 -0.832,1.575 -7.847,1.963c-0.713,0.039 -10.764,-1.553 -16.432,8.444c-0.495,0.872 -1.048,5.086 -0.737,6.217c0.285,1.039 0.816,5.251 6.879,7.036c6.897,2.03 18.032,-2.691 18.103,1.882c0.201,13.027 0.016,13.526 -1.073,13.644c-2.068,0.224 -43.764,-0.834 -43.803,-0.857c-0.358,-0.21 -0.012,-0.342 -0.701,-5.143c-0.061,-0.428 0.295,-0.389 0.312,-5.391c0.026,-7.192 0.328,-7.16 0.278,-14.344c-0.137,-19.591 -0.564,-23.296 -1.022,-23.563c-0.143,-0.083 -6.468,-0.333 -7.482,-9.164c-0.639,-5.559 8.369,-0.77 8.728,5.388c0.081,1.398 -0.321,1.986 1.073,1.999c10.116,0.097 10.073,0.448 20.18,0.448c7.57,0 7.548,-0.012 9.413,0.031Zm-32.253,-2.493c1.653,3.798 -2.895,-1.443 -2.148,-2.009c0.493,-0.373 2.014,1.815 2.148,2.009Z" style="fill:currentColor;fill-opacity:1;"/><path d="M246.887,183.915c14.691,-0 15.422,-0.237 15.444,1.093c0.161,9.891 -0.299,11.302 -5.562,11.819c-3.63,0.357 -3.546,0.643 -7.173,0.926c-7.85,0.612 -10.208,7.424 -1.392,8.914c5.882,0.994 10.038,-2.698 10.154,1.214c0.092,3.089 0.346,6.304 -1.6,6.381c-6.612,0.26 -7.219,-0.59 -10.411,2.948c-2.078,2.303 -2.624,2.369 -1.927,5.41c0.413,1.802 3.508,3.277 4.7,3.307c2.386,0.059 11.911,-0.727 12.007,3.474c0.011,0.503 0.4,5.587 -2.141,5.628c-0.068,0.001 -36.877,0.003 -37.646,-0.001c-2.049,-0.009 -1.473,-1.076 -1.763,-10.117c-0.101,-3.154 -0.418,-13.044 -0.183,-39.443c0.023,-2.593 1.304,-1.982 9.563,-1.982c1.435,-0 5.5,-0 17.929,0.429Z" style="fill:currentColor;fill-opacity:1;"/><path d="M145.126,220.667c7.062,-1.654 7.282,-2.046 9.466,-3.304c0.138,-0.079 2.488,-1.433 1.939,0.426c-2.664,9.024 -0.867,15.452 -1.434,16.604c-0.229,0.466 -0.426,0.401 -25.645,0.401c-11.316,0 -12.223,0.352 -12.237,-1.364c-0.032,-3.837 -0.24,-28.844 0.027,-47.966c0.025,-1.762 3.163,-1.269 5.486,-1.269c25.382,0 27.443,-0.139 26.317,1.645c-3.238,5.132 -12.596,26.41 -11.613,30.579c1.34,5.684 7.279,4.285 7.694,4.248Z" style="fill:currentColor;fill-opacity:1;"/><path d="M290.365,236.327c-12.914,0 -13.751,0.406 -13.534,-0.656c1.004,-4.933 3.684,-8.449 3.684,-26.894c0,-9.956 0.201,-9.986 -1.85,-19.713c-0.804,-3.812 -2.668,-7.055 -0.887,-7.378c4.725,-0.856 19.105,0.24 19.405,-0.652c0.068,-0.201 -1.07,-4.386 2.693,-7.074c0.863,-0.616 5.577,-1.966 4.612,1.128c-2.146,6.879 -5.93,6.052 -6.365,8.172c-1.425,6.935 -3.864,10.147 -3.864,31.793c0,12.564 4.692,20.987 2.433,21.244c-1.078,0.123 -5.82,0.04 -6.326,0.031Zm9.172,-58.809c0.747,-0.933 0.615,-1.085 1.126,-1.14c0.231,-0.025 0.908,0.33 -0.953,2.749c-3.253,4.226 -0.233,-1.494 -0.172,-1.608Z" style="fill:currentColor;fill-opacity:1;"/><path d="M208.997,189.503c0.016,3.024 1.121,5.346 -3.792,4.902c-3.588,-0.324 -3.752,-1.268 -3.998,-8.04c-0.093,-2.554 4.075,-2.006 5.794,-1.955c2.795,0.083 1.996,3.961 1.996,5.092Z" style="fill:currentColor;fill-opacity:1;"/><path d="M15.623,180.526c1.653,3.798 -2.895,-1.443 -2.148,-2.009c0.493,-0.373 2.014,1.815 2.148,2.009Z" style="fill:currentColor;fill-opacity:0.17;"/><path d="M299.537,177.518c0.747,-0.933 0.615,-1.085 1.126,-1.14c0.231,-0.025 0.908,0.33 -0.953,2.749c-3.253,4.226 -0.233,-1.494 -0.172,-1.608Z" style="fill:currentColor;fill-opacity:0.15;"/></g></symbol>
+</svg>
+
+<div class="viewport">
+<div class="deck" id="deck">
+
+<!-- 00 · Abertura: a startup (passar rápido, quase sem fala) -->
+<section class="slide" id="s0" data-tempo="0:00" data-fala="(Sem fala: passar em 2 a 3 segundos.)">
+  <div class="startup a-startup" role="img" aria-label="Colheitas 4.0">
+    <svg class="logo-colh" aria-hidden="true"><use href="#logo-colheitas"/></svg>
+    <span class="ver">4.0</span>
+  </div>
+  <p class="apresenta a-apresenta"><i></i>apresenta<i></i></p>
+  <p class="ifma a-ifma">Startup do <b>IFMA</b> Campus São José de Ribamar</p>
+</section>
+
+<!-- 01 · Capa do produto -->
+<section class="slide" id="s1" data-tempo="0:00" data-fala="Somos a Colheitas 4.0, e este é o Feirinha+: a feira que acontece quando a comunidade compra.">
+  <div class="img" data-kb></div>
+  <div class="esq">
+    <img class="logo a-logo" src="../assets/logo_do_pitch.png" alt="Feirinha+">
+    <p class="frase a">A feira acontece quando<br><em>a comunidade compra.</em></p>
+  </div>
+  <div class="rodape a">
+    <span>Um produto <b>Colheitas 4.0</b></span>
+    <span>·</span>
+    <span><b>IFMA</b> Campus São José de Ribamar</span>
+    <span>·</span>
+    <span>Eixo Consolidação</span>
+  </div>
+</section>
+
+<!-- 02 · Problema -->
+<section class="slide" id="s2" data-tempo="0:10" data-fala="O agricultor familiar tem três dores. Primeiro, colhe sem saber se vai vender — e o que sobra estraga: no Brasil, um terço das frutas e hortaliças se perde no caminho. Segundo, vende sempre nos mesmos canais: a feira e o atravessador, que cumpre seu papel, mas não abre mercado novo. E terceiro, a sazonalidade: na safra sobra produto e o preço cai; na entressafra falta renda. E a poucos quilômetros há 1,4 milhão de pessoas na Ilha sem tempo de ir à feira.">
+  <div class="img" data-kb></div>
+  <div class="dir">
+    <p class="kicker a">O problema</p>
+    <h2 class="a">As 3 dores de quem planta</h2>
+    <div class="dores">
+      <div class="dor a">
+        <div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-trash3"/></svg></div>
+        <div><h3>Colhe sem saber se vai vender</h3><p>O que sobra estraga: 30% das frutas e 35% das hortaliças se perdem entre a colheita e o consumidor.</p></div>
+        <div class="num"><span data-count="35" data-suf="%">35%</span><small>Embrapa/FAO</small></div>
+      </div>
+      <div class="dor a">
+        <div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-shop"/></svg></div>
+        <div><h3>Mercado pequeno</h3><p>Vende sempre nos mesmos canais, enquanto 1,46 milhão de pessoas vivem na Grande Ilha.</p></div>
+        <div class="num"><span data-count="1.46" data-dec="2" data-suf=" mi">1,46 mi</span><small>Censo 2022</small></div>
+      </div>
+      <div class="dor a">
+        <div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-calendar3"/></svg></div>
+        <div><h3>Sazonalidade</h3><p>Na safra sobra e o preço cai; na entressafra falta renda.</p></div>
+        <div class="num"><svg class="bi" aria-hidden="true" style="font-size:64px"><use href="#bi-graph-up-arrow"/></svg><small>safra × entressafra</small></div>
+      </div>
+    </div>
+    <div class="faixa a">
+      <svg class="bi" aria-hidden="true"><use href="#bi-tree-fill"/></svg>
+      <b data-count="187" data-suf=" mil">187 mil</b>
+      <span>estabelecimentos da agricultura familiar no MA, 85% do total (Censo Agro 2017)</span>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Solução -->
+<section class="slide" id="s3" data-tempo="0:50" data-fala="O Feirinha+ não é mais um iFood, não é marketplace e não é delivery. É uma feira invertida, como a sala de aula invertida: lá o aluno estuda antes e a aula vira prática; aqui a feira é comprada antes, no virtual, e o encontro físico vira só a retirada. O cliente monta a cesta no navegador, sem baixar app, e convida os vizinhos pelo WhatsApp: assim nasce a comunidade de um ponto. O agricultor recebe a demanda pronta e colhe só o que já foi vendido. Perda perto de zero, e um frete que serve a vinte famílias, não a uma.">
+  <video class="fundo" src="../assets/fundo-slide4.mp4" muted playsinline loop preload="auto" aria-hidden="true"></video>
+  <div class="vela"></div>
+  <div class="topo">
+    <div class="linha">
+      <p class="kicker a">A solução</p>
+      <div class="chips">
+        <span class="chip a">iFood<i class="risco"></i></span>
+        <span class="chip a">Marketplace<i class="risco"></i></span>
+        <span class="chip a">Delivery<i class="risco"></i></span>
+      </div>
+    </div>
+    <h2 class="a">É a feira <span>invertida.</span></h2>
+    <p class="apoio a">Como na sala de aula invertida: o estudo vem antes e a aula vira prática. Aqui <b>a compra vem antes</b> e a feira vira o encontro.</p>
+  </div>
+  <div class="passos">
+    <div class="passo a"><span class="n">1</span><h3>Forma-se uma comunidade</h3><p>Pedido no navegador, sem baixar app, e convite aos vizinhos pelo WhatsApp</p></div>
+    <div class="passo a"><span class="n">2</span><h3>A feira é comprada online</h3><p>O Feirinha+ consolida a demanda de cada ponto</p></div>
+    <div class="passo a"><span class="n">3</span><h3>Colhe só o que já foi vendido</h3><p>O agricultor recebe a demanda pronta antes da colheita</p></div>
+    <div class="passo a"><span class="n">4</span><h3>A feira acontece no ponto</h3><p>Cada um retira a sua cesta, com Pix direto ao produtor</p></div>
+  </div>
+</section>
+
+<!-- 04 · Demo -->
+<section class="slide escuro" id="s4" data-tempo="1:35" data-fala="Isto é o sistema rodando. A plataforma tem três apps: consumidor, gestor e produtor. No vídeo, o consumidor escolhe de quem comprar, monta a cesta, escolhe onde retirar e paga no Pix direto ao agricultor. O vídeo completo está no QR code do final.">
+  <div class="tel a-tel">
+    <video id="demo" src="../assets/feirinha-plus-demo-pitch.mp4" muted playsinline loop preload="auto"></video>
+    <div class="sem-video">Vídeo não encontrado: confira <b>video-demo/feirinha-plus-demo-pitch.mp4</b></div>
+  </div>
+  <div class="dir">
+    <p class="kicker a">Demonstração</p>
+    <h2 class="a">Não é protótipo de slide: <span>é o sistema rodando.</span></h2>
+    <p class="apps-titulo a">Uma plataforma, três apps</p>
+    <div class="lista-demo">
+      <div class="a no-video"><svg class="bi" aria-hidden="true"><use href="#bi-basket2-fill"/></svg><p class="txt"><b>Consumidor</b><span>monta a cesta, escolhe o ponto e paga no Pix</span></p><em class="tag video">no vídeo</em></div>
+      <div class="a"><svg class="bi" aria-hidden="true"><use href="#bi-laptop"/></svg><p class="txt"><b>Gestor</b><span>abre a feira, lança ofertas e acompanha os pedidos</span></p><em class="tag">funcionando</em></div>
+      <div class="a"><svg class="bi" aria-hidden="true"><use href="#bi-tree-fill"/></svg><p class="txt"><b>Produtor</b><span>cadastra a colheita pelo celular</span></p><em class="tag proto">protótipo</em></div>
+    </div>
+    <p class="qr-nota a"><svg class="bi" aria-hidden="true"><use href="#bi-qr-code"/></svg>Vídeo completo, com os três apps, no QR code do final</p>
+  </div>
+</section>
+
+<!-- 05 · Mercado -->
+<section class="slide" id="s5" data-tempo="1:50" data-fala="O Feirinha+ conecta três mercados. Na Ilha, quase cem mil famílias moram em apartamento ou condomínio; queremos 30 condomínios, 4% do total. Do outro lado, 644 agricultores familiares; precisamos de 15, só 2%. E o poder público: só no Maranhão, 151 milhões de reais por ano do PNAE têm de comprar da agricultura familiar, e o difícil é operar essa compra. Nossa meta é que 10 municípios usem o Feirinha+.">
+  <div class="pad">
+    <p class="kicker a">Mercado</p>
+    <h2 class="a">O Feirinha+ conecta três mercados</h2>
+    <div class="mercados">
+      <div class="merc a">
+        <header><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-buildings-fill"/></svg></div><h3>Consumidor</h3></header>
+        <div class="funil">
+          <div class="f" style="width:100%"><b data-count="486920">486.920</b><span>domicílios na Grande Ilha</span></div>
+          <div class="f" style="width:88%"><b data-count="97307">97.307</b><span>em apartamento ou condomínio (Censo 2022)</span></div>
+          <div class="f" style="width:76%"><b>≈ <span data-count="800">800</span>*</b><span>condomínios</span></div>
+          <div class="f meta"><b>Meta: <span data-count="30">30</span></b><span>condomínios, 4% do total</span></div>
+        </div>
+      </div>
+      <div class="merc a">
+        <header><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-tree-fill"/></svg></div><h3>Agricultor</h3></header>
+        <div class="funil">
+          <div class="f" style="width:100%"><b data-count="644">644</b><span>estabelecimentos da agricultura familiar na Ilha (Censo Agro 2017)</span></div>
+          <div class="f" style="width:82%"><b data-count="5">5</b><span>já cadastrados</span></div>
+          <div class="f meta"><b>Meta: <span data-count="15">15</span></b><span>agricultores, só 2% da base</span></div>
+        </div>
+      </div>
+      <div class="merc a">
+        <header><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-bank2"/></svg></div><h3>Poder público</h3></header>
+        <div class="funil">
+          <div class="f" style="width:100%"><b>R$ <span data-count="151.6" data-dec="1">151,6</span> mi/ano</b><span>do PNAE no MA obrigatórios para a agricultura familiar (FNDE, 2026)</span></div>
+          <div class="f" style="width:82%"><b data-count="217">217</b><span>municípios</span></div>
+          <div class="f meta"><b>Meta: <span data-count="10">10</span></b><span>municípios usando o Feirinha+</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="fonte a">* estimativa da equipe: média de 120 unidades por condomínio</p>
+</section>
+
+<!-- 06 · Modelo de negócio -->
+<section class="slide" id="s6" data-tempo="2:25" data-fala="Quem paga nunca é o agricultor. A receita sobe em três degraus. Primeiro, uma taxa de comodidade de cinco por cento da cesta, uns quatro a cinco reais, paga por quem recebe a conveniência. Depois, a feira automática: o cliente paga o mês adiantado e recebe uma cestinha toda semana — e o agricultor passa a saber, com um mês de antecedência, quanto vai vender. E o degrau que escala: licenciar a operação para prefeituras, porque comprar do agricultor já tem plataforma; consolidar e entregar, não. A licença é um percentual pequeno, de 2,5 a 5%, do que o município já é obrigado a comprar da agricultura familiar. A Secretaria de Estado da Agricultura Familiar e a SEMAGRI de Ribamar já demonstraram interesse.">
+  <div class="pad">
+    <p class="kicker a">Modelo de negócio</p>
+    <h2 class="a">A receita sobe em três degraus</h2>
+  </div>
+  <div class="selo" id="selo"><svg class="bi" aria-hidden="true"><use href="#bi-shield-fill-check"/></svg><b>O agricultor nunca paga</b></div>
+  <div class="escada">
+    <div class="degrau">
+      <span class="quando"><svg class="bi" aria-hidden="true"><use href="#bi-cash-coin"/></svg>Hoje</span>
+      <h3>Taxa de comodidade</h3>
+      <p>Paga pelo consumidor: 5% da cesta, mínimo de R$ 3.</p>
+      <div class="valor">5% <small>≈ R$ 4–5 numa cesta de R$ 80–100</small></div>
+    </div>
+    <div class="degrau">
+      <span class="quando"><svg class="bi" aria-hidden="true"><use href="#bi-arrow-repeat"/></svg>Próximo</span>
+      <h3>Assinatura "Feira automática"</h3>
+      <p>O cliente paga o mês adiantado e recebe uma cestinha toda semana: receita recorrente e caixa antecipado para nós, demanda garantida para o agricultor.</p>
+      <div class="valor">mensal <small>e recorrente</small></div>
+    </div>
+    <div class="degrau">
+      <span class="quando"><svg class="bi" aria-hidden="true"><use href="#bi-bank2"/></svg>Escala</span>
+      <h3>Licenciamento B2G da operação</h3>
+      <p>Municípios licenciam o método e a tecnologia de consolidação e rota. A escola vira ponto de retirada.</p>
+      <div class="valor">2,5–5% <small>do PNAE da agricultura familiar do município · a partir de R$ 1,4 mil/mês</small></div>
+    </div>
+  </div>
+  <div class="chao"></div>
+  <p class="nota a"><svg class="bi" aria-hidden="true"><use href="#bi-signpost-split-fill"/></svg>O mínimo de pedidos de cada ponto é calculado pelo sistema (distância, ticket, frete).</p>
+</section>
+
+<!-- 07 · Concorrência -->
+<section class="slide" id="s7" data-tempo="3:05" data-fala="A gente não compete com a feira nem com o atravessador — de certa forma, o Feirinha+ também é um intermediário. A diferença é que somos o único canal em que a demanda chega antes da colheita. É mais uma porta de venda para o mesmo agricultor, não uma troca.">
+  <div class="pad">
+    <p class="kicker a">Concorrência</p>
+    <h2 class="a">Não competimos: abrimos um canal novo</h2>
+    <table class="comp a">
+      <thead><tr><th></th><th>Feira livre</th><th>Atravessador / Ceasa</th><th>Feira de condomínio</th><th>Supermercado / delivery</th><th class="nos">Feirinha+</th></tr></thead>
+      <tbody>
+        <tr><td>Demanda conhecida antes de colher</td><td class="nao">#X</td><td class="parc">parcial</td><td class="nao">#X</td><td class="nao">#X</td><td class="nos">#V</td></tr>
+        <tr><td>Consumidor conhece quem plantou</td><td class="sim">#V</td><td class="nao">#X</td><td class="sim">#V</td><td class="nao">#X</td><td class="nos">#V</td></tr>
+        <tr><td>Sem horário fixo para quem compra</td><td class="nao">#X</td><td class="nao">#D</td><td class="nao">#X</td><td class="sim">#V</td><td class="nos">#V</td></tr>
+        <tr><td>Leva o agricultor a bairros novos</td><td class="nao">#X</td><td class="sim">#V</td><td class="parc">parcial</td><td class="nao">#X</td><td class="nos">#V</td></tr>
+        <tr><td>Sem baixar app</td><td class="nao">#D</td><td class="nao">#D</td><td class="nao">#D</td><td class="nao">#X</td><td class="nos">#V</td></tr>
+      </tbody>
+    </table>
+    <p class="rodape a"><svg class="bi" aria-hidden="true"><use href="#bi-signpost-split-fill"/></svg>Feira livre e atravessador continuam essenciais: o Feirinha+ é mais um canal para o mesmo agricultor.</p>
+  </div>
+</section>
+
+<!-- 08 · Tração -->
+<section class="slide" id="s8" data-tempo="3:30" data-fala="Ainda não estamos vendendo — e não vou fingir que estamos. O que temos: cinco agricultores cadastrados, indicados pela própria SEMAGRI de Ribamar. A SEMAGRI e a Secretaria de Estado da Agricultura Familiar já declararam interesse. Ouvimos consumidores no IFMA, e a adesão foi boa até entre quem mora em casa, não só em condomínio. E estamos fechando um protocolo de qualidade com agrônoma, nutricionista e bióloga, porque todo cliente pergunta: esse produto é bom?">
+  <div class="img" data-kb></div>
+  <div class="esq">
+    <p class="kicker a">Tração</p>
+    <h2 class="a">O que já temos</h2>
+    <p class="lead a">Ainda não estamos vendendo. Estamos prontos para a primeira feira.</p>
+    <div class="cards">
+      <div class="card a"><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-people-fill"/></svg></div><b><span data-count="5">5</span> agricultores</b><p>cadastrados, indicados pela SEMAGRI São José de Ribamar</p></div>
+      <div class="card a"><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-hand-thumbs-up-fill"/></svg></div><b>Interesse declarado</b><p>da SEMAGRI de Ribamar (secretária, adjunto e técnico) e da Secretaria de Estado da Agricultura Familiar</p></div>
+      <div class="card a"><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-chat-fill"/></svg></div><b>Pesquisa com consumidores</b><p>qualitativa no IFMA: boa adesão de quem mora em condomínio e em casa. Questionário quantitativo em andamento</p></div>
+      <div class="card a"><div class="ic pop"><svg class="bi" aria-hidden="true"><use href="#bi-clipboard2-check-fill"/></svg></div><b>Protocolo Colheitas</b><p>de qualidade, em elaboração com agrônoma, nutricionista e bióloga</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 · Equipe -->
+<section class="slide" id="s9" data-tempo="4:05" data-fala="Eu coordeno e trago dados e inteligência artificial; Juliana e Davi constroem o sistema; o Heitor criou toda a identidade visual do Feirinha+; e temos a Direção do campus do nosso lado.">
+  <div class="pad">
+    <p class="kicker a">Equipe</p>
+    <h2 class="a">Quem faz o Feirinha+</h2>
+    <div class="equipe">
+      <div class="pessoa a">
+        <div class="toldo-b"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="dentro"><div class="av" role="img" aria-label="Foto de Artur" style="background-image:url('../assets/artur.png')"><svg class="bi" aria-hidden="true"><use href="#bi-mortarboard-fill"/></svg></div></div>
+        <div class="balcao"><h3>Artur</h3><p class="papel">Fundador</p><p>Prof. de Computação do IFMA, doutor em Machine Learning</p></div>
+      </div>
+      <div class="pessoa a">
+        <div class="toldo-b"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="dentro"><div class="av" role="img" aria-label="Foto de Juliana" style="background-image:url('../assets/juliana.png')"><svg class="bi" aria-hidden="true"><use href="#bi-database-fill"/></svg></div></div>
+        <div class="balcao"><h3>Juliana</h3><p class="papel">Backend e dados</p><p>API e cadastro de agricultores</p></div>
+      </div>
+      <div class="pessoa a">
+        <div class="toldo-b"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="dentro"><div class="av" role="img" aria-label="Foto de Davi" style="background-image:url('../assets/davi.png')"><svg class="bi" aria-hidden="true"><use href="#bi-window"/></svg></div></div>
+        <div class="balcao"><h3>Davi</h3><p class="papel">Frontend</p><p>App do cliente e painel do gestor</p></div>
+      </div>
+      <div class="pessoa a">
+        <div class="toldo-b"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="dentro"><div class="av" role="img" aria-label="Foto de Heitor" style="background-image:url('../assets/heitor.jpeg')"><svg class="bi" aria-hidden="true"><use href="#bi-palette-fill"/></svg></div></div>
+        <div class="balcao"><h3>Heitor</h3><p class="papel">Design</p><p>Identidade visual do Feirinha+</p></div>
+      </div>
+    </div>
+    <p class="apoio a"><svg class="bi" aria-hidden="true"><use href="#bi-hand-thumbs-up-fill"/></svg><span>Apoio: <b>IFMA São José de Ribamar</b></span></p>
+  </div>
+</section>
+
+<!-- 10 · Próximos passos -->
+<section class="slide" id="s10" data-passos="4" data-tempo="4:20" data-fala="Vamos conquistar a Ilha ponto a ponto. Em novembro, a primeira feira no campus. Em dezembro, o primeiro condomínio em São Luís. Em 2027, cinco pontos e a proposta de licenciamento ao poder público. E o horizonte é a Ilha inteira. Feira em condomínio já existe — mas nela o feirante leva o estoque e torce para vender; se não vende, vai embora. Nós chegamos com a feira já vendida.">
+  <div class="mapa" id="mapa">
+    <img src="../assets/mapa-sao-luis.png" alt="Mapa da Ilha do Maranhão com as barraquinhas do Feirinha+">
+  </div>
+  <p class="fonte" style="position:absolute;left:120px;bottom:40px">Posições ilustrativas</p>
+  <div class="esq">
+    <p class="kicker a">Próximos passos</p>
+    <h2 class="a">Conquista de territórios</h2>
+    <div class="etapas">
+      <div class="etapa"><div class="marco"><svg class="bi" aria-hidden="true"><use href="#bi-flag-fill"/></svg></div><div><p class="quando">Nov/2026</p><h3>1ª feira-piloto no Campus IFMA SJR</h3><p>pré-pedido e cross-docking</p></div></div>
+      <div class="etapa"><div class="marco"><svg class="bi" aria-hidden="true"><use href="#bi-buildings-fill"/></svg></div><div><p class="quando">Dez/2026</p><h3>1º condomínio em São Luís</h3><p>Protocolo Colheitas publicado (Editora IFMA)</p></div></div>
+      <div class="etapa"><div class="marco"><svg class="bi" aria-hidden="true"><use href="#bi-geo-alt-fill"/></svg></div><div><p class="quando">2027</p><h3>5 pontos ativos, 15 agricultores</h3><p>1º piloto com escola como ponto de retirada e proposta de licenciamento à SEMAGRI</p></div></div>
+      <div class="etapa"><div class="marco"><svg class="bi" aria-hidden="true"><use href="#bi-graph-up-arrow"/></svg></div><div><p class="quando">Horizonte</p><h3>30 pontos na Grande Ilha</h3><p>chegamos com a feira já vendida</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · Fechamento -->
+<section class="slide escuro" id="s11" data-tempo="4:50" data-fala="O Feirinha+ faz a feira acontecer onde a comunidade está — e o agricultor colhe sabendo que já vendeu. Obrigado.">
+  <div class="img" data-kb></div>
+  <div class="dir">
+    <div class="logo-box a"><img class="logo" src="../assets/logo_do_pitch_verde_claro.png" alt="Feirinha+"></div>
+    <p class="fecho a">Do campo à sua cesta, <em>colhido depois de vendido.</em></p>
+    <div class="base">
+      <div class="qr a"><img src="../assets/qrcode_demo.png" alt="QR code"></div>
+      <div class="contato a">
+        <p class="obrigado">Obrigado!</p>
+        <div><svg class="bi" aria-hidden="true"><use href="#bi-qr-code"/></svg>Aponte a câmera e conheça o projeto</div>
+        <div class="assina">Um produto <svg class="logo-colh" role="img" aria-label="Colheitas"><use href="#logo-colheitas"/></svg><b>4.0</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<div class="barra" id="barra"></div>
+<div class="ctrl">
+  <button id="ant" aria-label="Slide anterior"><svg class="bi" aria-hidden="true"><use href="#bi-arrow-left"/></svg></button>
+  <span id="cont">1 / 11</span>
+  <button id="prox" aria-label="Próximo slide"><svg class="bi" aria-hidden="true"><use href="#bi-arrow-right"/></svg></button>
+  <button id="tela" aria-label="Tela cheia"><svg class="bi" aria-hidden="true"><use href="#bi-arrows-fullscreen"/></svg></button>
+</div>
+<div class="notas" id="notas"><b id="notas-t"></b><span id="notas-f"></span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js" integrity="sha384-czaB7zH9slIhvFgUxhO8sSnYf4cnCeV2N3zOvDnNKFzRKu5AwqDKEZlCLsaQkoop" crossorigin="anonymous"></script>
+<script>
+(function(){
+  const deck = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  // ?sem-animacao (ou o sistema pedindo menos movimento) mostra tudo pronto, sem animar
+  const semAnim = /sem-animacao/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const temGsap = !!window.gsap && !semAnim, temMotion = !!window.Motion && !semAnim;
+  let atual = 0, passo = 0, animando = false;
+
+  // ícones da tabela (troca marcadores pelos SVG do Bootstrap)
+  const ic = { '#V':'check-lg', '#X':'x-lg', '#D':'dash-lg' };
+  document.querySelectorAll('.comp td').forEach(td => {
+    const k = td.textContent.trim();
+    if (ic[k]) td.innerHTML = '<svg class="bi" aria-label="' + ({'#V':'sim','#X':'não','#D':'não se aplica'})[k] + '"><use href="#bi-' + ic[k] + '"/></svg>';
+  });
+
+  // escala do palco 1920×1080
+  function escala(){
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    deck.style.transform = 'translate(-50%, -50%) scale(' + s + ')';
+  }
+  addEventListener('resize', escala); escala();
+
+  // contadores
+  const fmt = (v, dec) => v.toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  function contar(sl){
+    sl.querySelectorAll('[data-count]').forEach(el => {
+      const alvo = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0), suf = el.dataset.suf || '';
+      if (!temGsap) { el.textContent = fmt(alvo, dec) + suf; return; }
+      const o = { v: 0 };
+      gsap.to(o, { v: alvo, duration: 1.6, delay: .35, ease: 'power2.out',
+        onUpdate: () => el.textContent = fmt(o.v, dec) + suf });
+    });
+  }
+
+  // pequenas molas com Motion
+  function molas(sl){
+    if (!temMotion) return;
+    const { animate, stagger } = Motion;
+    const pops = sl.querySelectorAll('.pop');
+    if (pops.length) animate(pops, { scale: [0.4, 1], rotate: [-12, 0] }, { type: 'spring', stiffness: 260, damping: 14, delay: stagger(0.12, { startDelay: 0.4 }) });
+    sl.querySelectorAll('[data-kb]').forEach(el => animate(el, { scale: [1.08, 1] }, { duration: 7, easing: 'ease-out' }));
+  }
+
+  // coreografia de cada slide (GSAP)
+  const entradas = {
+    s0(sl, tl){
+      tl.fromTo(sl.querySelector('.a-startup'), { opacity: 0, scale: .92, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 1, ease: 'power3.out' }, 0.2);
+      tl.fromTo(sl.querySelector('.a-apresenta'), { opacity: 0, y: 20, letterSpacing: '.3em' }, { opacity: 1, y: 0, letterSpacing: '0em', duration: .9, ease: 'power2.out' }, 1);
+      tl.fromTo(sl.querySelector('.a-ifma'), { opacity: 0 }, { opacity: 1, duration: .6 }, 1.5);
+    },
+    s1(sl, tl){
+      tl.fromTo(sl.querySelector('.a-logo'), { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power3.inOut' }, 0.15);
+    },
+    s3(sl, tl){
+      tl.fromTo(sl.querySelectorAll('.risco'), { scaleX: 0 }, { scaleX: 1, duration: .45, stagger: .22, ease: 'power2.inOut' }, .7);
+    },
+    s4(sl, tl){
+      tl.fromTo(sl.querySelector('.a-tel'), { y: 120, rotate: -4, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: 1, ease: 'back.out(1.4)' }, .1);
+    },
+    s5(sl, tl){
+      tl.fromTo(sl.querySelectorAll('.f'), { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: .6, stagger: .09, ease: 'power3.out' }, .5);
+    },
+    s6(sl, tl){
+      tl.fromTo(sl.querySelectorAll('.degrau'), { scaleY: 0 }, { scaleY: 1, duration: .8, stagger: .3, ease: 'power3.out' }, .3);
+      tl.fromTo(sl.querySelectorAll('.degrau > *'), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .4, stagger: .05 }, .8);
+      tl.add(() => {
+        const selo = sl.querySelector('#selo');
+        if (temMotion) Motion.animate(selo, { scale: [0, 1], rotate: [-25, 0] }, { type: 'spring', stiffness: 180, damping: 11 });
+        else gsap.fromTo(selo, { scale: 0 }, { scale: 1, ease: 'back.out(2)' });
+      }, 1.9);
+      tl.set(sl.querySelector('#selo'), { scale: 0 }, 0);
+    },
+    s7(sl, tl){
+      tl.fromTo(sl.querySelectorAll('.comp tbody tr'), { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: .45, stagger: .14 }, .6);
+      tl.fromTo(sl.querySelectorAll('.comp td.nos .bi'), { scale: 0 }, { scale: 1, duration: .4, stagger: .14, ease: 'back.out(3)' }, 1.2);
+    },
+    s9(sl, tl){
+      tl.fromTo(sl.querySelectorAll('.toldo-b'), { yPercent: -60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .7, stagger: .12, ease: 'bounce.out' }, .35);
+      tl.fromTo(sl.querySelectorAll('.av'), { scale: .5, opacity: 0 }, { scale: 1, opacity: 1, duration: .6, stagger: .12, ease: 'back.out(2)' }, .7);
+    },
+    s10(sl, tl){
+      tl.fromTo(sl.querySelector('.mapa > img'), { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: .9, ease: 'power3.out' }, .2);
+    },
+    s11(sl, tl){
+      tl.fromTo(sl.querySelector('.obrigado'), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .6, ease: 'back.out(2)' }, 1.2);
+    }
+  };
+
+  function entrar(sl){
+    if (!temGsap) return;
+    const tl = gsap.timeline();
+    tl.fromTo(sl.querySelectorAll('.a'), { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: .7, stagger: .09, ease: 'power3.out' }, 0.05);
+    (entradas[sl.id] || (() => {}))(sl, tl);
+  }
+
+  // barraquinhas do mapa: [x, y em px da imagem mapa-sao-luis.png (792×864), etapa]. Posições ilustrativas
+  const PONTOS = [
+    [530, 470, 0],                                   // campus IFMA São José de Ribamar
+    [335, 275, 1],                                   // 1º condomínio em São Luís
+    [235, 395, 2], [570, 255, 2], [300, 525, 2],     // 5 pontos em 2027
+    [270, 255, 3], [385, 240, 3], [430, 305, 3], [300, 340, 3], [385, 365, 3], [165, 400, 3], [250, 445, 3],
+    [335, 450, 3], [415, 435, 3], [200, 490, 3], [380, 520, 3], [160, 565, 3], [240, 570, 3], [325, 590, 3],
+    [205, 635, 3], [430, 565, 3], [500, 205, 3], [625, 205, 3], [655, 290, 3], [500, 310, 3], [610, 125, 3],
+    [700, 105, 3], [560, 400, 3], [515, 545, 3]
+  ];
+  const mapa = document.getElementById('mapa');
+  const bancas = PONTOS.map(([x, y, e]) => {
+    const b = document.createElement('div');
+    b.className = 'banquinha' + (e < 2 ? ' grande' : '');
+    b.style.left = (x / 792 * 100) + '%';
+    b.style.top = (y / 864 * 100) + '%';
+    b.dataset.etapa = e;
+    b.innerHTML = '<i class="poste e"></i><i class="poste d"></i><i class="tampo"></i><i class="teto"></i>';
+    mapa.appendChild(b);
+    return b;
+  });
+  // monta a banquinha: tampo, postes e por fim o toldo caindo
+  function montar(b, atraso){
+    if (!temGsap) { b.style.opacity = 1; return; }
+    const tl = gsap.timeline({ delay: atraso });
+    tl.set(b, { opacity: 1 });
+    tl.fromTo(b.querySelector('.tampo'), { scaleX: 0 }, { scaleX: 1, duration: .25, ease: 'power2.out' });
+    tl.fromTo(b.querySelectorAll('.poste'), { scaleY: 0 }, { scaleY: 1, duration: .25, ease: 'power2.out' });
+    tl.fromTo(b.querySelector('.teto'), { y: -28, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: 'bounce.out' });
+  }
+
+  // etapas do mapa (slide 10): barraquinhas das etapas anteriores ficam; as da etapa atual são montadas
+  function mostrarPasso(sl, p){
+    const ets = sl.querySelectorAll('.etapa');
+    let n = 0;
+    bancas.forEach(b => {
+      const e = +b.dataset.etapa;
+      if (e > p) { if (temGsap) gsap.killTweensOf(b); b.style.opacity = 0; }
+      else if (e === p) montar(b, .35 + (n++) * (p === 3 ? .06 : .18));
+      else if (b.style.opacity !== '1') b.style.opacity = 1;
+    });
+    ets.forEach((e, i) => { e.classList.toggle('on', i === p); e.classList.toggle('feita', i < p); });
+    if (temMotion) Motion.animate(ets[p].querySelector('.marco'), { scale: [0.6, 1.15, 1] }, { duration: .5 });
+  }
+
+  const video = document.getElementById('demo');
+  video.addEventListener('error', () => { video.style.display = 'none'; video.nextElementSibling.style.display = 'grid'; });
+  function tocarVideos(sl){
+    document.querySelectorAll('video').forEach(v => { if (!sl.contains(v)) v.pause(); });
+    sl.querySelectorAll('video').forEach(v => { v.currentTime = 0; v.play().catch(() => {}); });
+  }
+  // slide da solução: o passo que está em cena no vídeo (2 s cada) acende
+  const fundo = document.querySelector('#s3 .fundo'), passos = document.querySelectorAll('#s3 .passo');
+  fundo.addEventListener('timeupdate', () => {
+    const i = Math.min(3, Math.floor(fundo.currentTime / 2));
+    passos.forEach((p, k) => p.classList.toggle('on', k === i));
+  });
+
+  function ir(n, dir){
+    if (n < 0 || n >= slides.length || n === atual || animando) return;
+    const de = slides[atual], para = slides[n];
+    atual = n; passo = 0;
+    if (para.id === 's10') mostrarPasso(para, 0);
+    tocarVideos(para);
+    if (temGsap) {
+      animando = true;
+      gsap.set(para, { visibility: 'visible', xPercent: 6 * dir, opacity: 0, zIndex: 2 });
+      gsap.set(de, { visibility: 'visible', zIndex: 1 });
+      gsap.to(de, { xPercent: -6 * dir, opacity: 0, duration: .55, ease: 'power2.in' });
+      gsap.to(para, { xPercent: 0, opacity: 1, duration: .65, delay: .2, ease: 'power3.out',
+        onComplete: () => { gsap.set(de, { visibility: 'hidden', xPercent: 0, opacity: 1 }); animando = false; } });
+    } else { de.classList.remove('ativo'); }
+    para.classList.add('ativo'); de.classList.remove('ativo');
+    entrar(para); contar(para); molas(para); ui();
+  }
+
+  function avancar(){
+    const sl = slides[atual], tot = +(sl.dataset.passos || 0);
+    if (tot && passo < tot - 1) { passo++; mostrarPasso(sl, passo); ui(); return; }
+    ir(atual + 1, 1);
+  }
+  function voltar(){
+    const sl = slides[atual];
+    if (sl.dataset.passos && passo > 0) { passo--; mostrarPasso(sl, passo); ui(); return; }
+    ir(atual - 1, -1);
+  }
+
+  const notas = document.getElementById('notas');
+  function ui(){
+    const sl = slides[atual];
+    document.getElementById('cont').textContent = (atual + 1) + ' / ' + slides.length;
+    document.getElementById('barra').style.width = ((atual + 1) / slides.length * 100) + '%';
+    document.getElementById('notas-t').textContent = 'Fala · ' + sl.dataset.tempo;
+    document.getElementById('notas-f').textContent = sl.dataset.fala || '';
+  }
+
+  addEventListener('keydown', e => {
+    if (['ArrowRight','PageDown',' ','Enter'].includes(e.key)) { e.preventDefault(); avancar(); }
+    else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); voltar(); }
+    else if (e.key === 'Home') ir(0, -1);
+    else if (e.key === 'End') ir(slides.length - 1, 1);
+    else if (e.key.toLowerCase() === 'n') notas.classList.toggle('on');
+    else if (e.key.toLowerCase() === 'f') telaCheia();
+    else if (e.key.toLowerCase() === 'h') document.body.classList.toggle('sem-ctrl');
+  });
+  document.getElementById('prox').onclick = avancar;
+  document.getElementById('ant').onclick = voltar;
+  function telaCheia(){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  document.getElementById('tela').onclick = telaCheia;
+
+  // toque: deslizar para os lados
+  let x0 = null;
+  addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) (dx < 0 ? avancar : voltar)(); x0 = null; });
+
+  // abre direto num slide pela URL (ex.: apresentacao.html#5)
+  const h = parseInt(location.hash.slice(1), 10);
+  if (h >= 1 && h <= slides.length) atual = h - 1;
+  const ini = slides[atual];
+  ini.classList.add('ativo');
+  if (ini.id === 's10') mostrarPasso(ini, 0);
+  ui(); entrar(ini); contar(ini); molas(ini); tocarVideos(ini);
+})();
+</script>
+</body>
+</html>
